@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="phonecatApp">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Global Twitter analysis
+    <title>
+        Global Twitter analysis
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script type="text/javascript">
+        var data = {{ result|safe }}
+        var phonecatApp = angular.module('phonecatApp', [], function($interpolateProvider) {
+            $interpolateProvider.startSymbol('{[');
+            $interpolateProvider.endSymbol(']}');
+        });
+
+        phonecatApp.controller('PhoneListCtrl', function ($scope) {
+            $scope.phones = data
+        });
+        debugger
+    </script>
 </head>
-<body>
-<h1>Global Twitter analysis for  {{ city }}</h1>
-<div id="scenario">
-    <span id="S xswscenarioNum">
-        There are {{ num_of_scenario }} scenarios in the system
-    </span>
-    <ul>
-        {% for row in rows %}
-            <li>{{ row.value['text'] }}</li>
-        {% endfor %}
-    </ul>
-</div>
+<body ng-controller="PhoneListCtrl">
+    <h1>Global Twitter analysis for  {{ city }}</h1>
+    <div id="scenario">
+        <span id="S xswscenarioNum">
+            There are {{ num_of_scenario }} scenarios in the system
+        </span>
+        <ul>
+            <li ng-repeat="phone in phones">
+                <span>{[ phone.key ]}</span>
+                <p>{[ phone.value['text'] ]}</p>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>
