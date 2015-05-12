@@ -12,24 +12,17 @@ api = restful.Api(app)
 
 db = Model.setup_couchdb('')
 
-class Documents(restful.Resource):
-    def get(self):
-        num_of_scenario = 3
-        map_fun = '''function(doc) {
-            if(doc.id)
-            emit(doc.id, doc);
-            }'''
-        rows = Model.get_temp_view(db,map_fun).rows
-        return rows
-
-api.add_resource(Documents, '/Api/Get_All_Document')
-
 @app.route('/')
 def index():
     city = 'Toronto'
     result = make_request('http://localhost:5000/Api/Get_All_Document')
+    #map_fun = '''function(doc) {
+    #        if(doc.id)
+    #        emit(doc.id, doc);
+    #        }'''
+    #result = Model.get_temp_view(db,map_fun).rows
     #result = [1, 'foo']
-    return render_template('Index.html', city = city, result = json.dumps(result))
+    return render_template('Index.html', city = city, result = result, tweets = result)
 
 
 def make_request(url):
@@ -39,4 +32,4 @@ def make_request(url):
     return result
 
 if __name__ == '__main__':
-    app.run(host='localhost' ,port=4444, debug=True)
+    app.run(host='localhost' ,port=4444)
