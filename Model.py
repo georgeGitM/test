@@ -23,7 +23,7 @@ def get_view(db,view_name, map_fun, reduce_fun='', start_key=-1,end_key=-1):
 
 
 def setup_couchdb(Url):
-    db_name = 'back'
+    db_name = 'toronto'
     couch = couchdb.Server()
     # couch.resource.credentials = (db_user, db_pass)
     try:
@@ -35,4 +35,3 @@ def setup_couchdb(Url):
 
 import couchdb
 from couchdb import Server, Session
-
